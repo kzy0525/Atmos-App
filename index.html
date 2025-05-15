@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMetrics - Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1 class="EcoMetrics">Atmo</h1>
+        <img src="images/Ellipse34.png" alt="Banner Decoration" class="ellipse" />
+        <img src="images/Ellipse34.png" alt="Banner Decoration" class="ellipse1" />
+
+        <!-- Welcome Banner -->
+        <section class="welcome-banner">
+            <h1 class="welcome-text">Welcome Back</h1>
+            <img src="images/Vector4.png" alt="Banner Decoration" class="welcome-vector" />
+        </section>
+
+        <!-- Metrics Section -->
+        <section>
+            <h2 class="metrics-title">Here are today’s Metrics:</h2>
+            <div class="metrics-grid">
+                <a href="temperature.html" class="metric-card">
+                    <div class="metric-header">Temperature</div>
+                    <div class="metric-icon">🌡️</div>
+                    <div class="metric-value-container">
+                        <div class="metric-value" id="temperature">--</div>
+                        <div class="metric-unit">°C</div>
+                    </div>
+                </a>
+                <a href="humidity.html" class="metric-card">
+                    <div class="metric-header">Humidity</div>
+                    <div class="metric-icon">💧</div>
+                    <div class="metric-value-container">
+                        <div class="metric-value" id="humidity">--</div>
+                        <div class="metric-unit">%</div>
+                    </div>
+                </a>
+                <a href="sound.html" class="metric-card">
+                    <div class="metric-header">Sound Detection</div>
+                    <div class="metric-icon">🔊</div>
+                    <div class="metric-value-container">
+                        <div class="metric-value" id="sound">--</div>
+                        <div class="metric-unit"></div>
+                    </div>
+                </a>
+                <a href="TVOC.html" class="metric-card">
+                    <div class="metric-header">TVOC</div>
+                    <div class="metric-icon">☣️</div>
+                    <div class="metric-value-container">
+                        <div class="metric-value" id="tvoc">--</div>
+                        <div class="metric-unit">PPB</div>
+                    </div>
+                </a>
+                <a href="co2.html" class="metric-card">
+                    <div class="metric-header">Carbon Dioxide</div>
+                    <div class="metric-icon">💨</div>
+                    <div class="metric-value-container">
+                        <div class="metric-value" id="ECO2">--</div>
+                        <div class="metric-unit">PPM</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <span class="nav-icon">🔔</span>
+                <span>Notifications</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
+  
+    <script>
+        async function fetchSensorData() {
+            try {
+                // Fetch data 
+                const response = await fetch('http://localhost:5500/data');
+                const data = await response.json();
+    
+                // Update the homescreen metrics
+                document.getElementById('temperature').textContent = data.temperature || '--';
+                document.getElementById('humidity').textContent = data.humidity || '--';
+                document.getElementById('sound').textContent = data.sound || '--';
+                document.getElementById('ECO2').textContent = data.ECO2 || '--';
+                document.getElementById('tvoc').textContent = data.tvoc || '--';
+            } catch (error) {
+                console.error('Error fetching sensor data:', error);
+            }
+        }
+    
+        // Fetch data every second
+        setInterval(fetchSensorData, 1000);
+
+        
+    </script>
+</body>
+</html>
